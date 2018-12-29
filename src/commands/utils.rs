@@ -11,7 +11,7 @@ command!(code(_ctx, msg, _args) {
 });
 
 
-pub const RESOURCES_CHANNEL: u64 = 528675616472563712;
+pub const RESOURCES_CHANNEL: u64 = 527617626881392640;
 
 command!(addresource(_ctx, msg, args) {
     let channels = msg.guild_id.unwrap().channels().unwrap();
