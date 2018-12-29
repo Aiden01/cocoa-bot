@@ -1,0 +1,17 @@
+[package]
+name = "discord-bot"
+version = "0.1.0"
+authors = ["WebD01 <liangu@protonmail.com>"]
+edition = "2018"
+
+[patch.crates-io]
+openssl = { git = "https://github.com/ishitatsuyuki/rust-openssl", branch = "0.9.x" }
+
+[dependencies.serenity]
+git = "https://github.com/serenity-rs/serenity.git"
+features = ["framework", "standard_framework"]
+
+[dependencies]
+
+
+
