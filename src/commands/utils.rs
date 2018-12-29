@@ -31,6 +31,7 @@ command!(addresource(_ctx, msg, args) {
             let resource = channel.send_message(|m| m.content(&format!("New resource added by <@{}>", msg.author.id)).embed(create_embed)).unwrap();
             resource.react("🚫").unwrap();
             msg.channel_id.say("You resource has been added successfully :white_check_mark:. If you want to remove it, click on :no_entry_sign:.").unwrap();
+            msg.delete().unwrap();
     } else {
         msg.channel_id.say("Resources channel not found").unwrap();
     }
