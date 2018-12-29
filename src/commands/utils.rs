@@ -11,7 +11,7 @@ command!(code(_ctx, msg, _args) {
 });
 
 
-const RESOURCES_CHANNEL: u64 = 527617626881392640;
+pub const RESOURCES_CHANNEL: u64 = 528675616472563712;
 
 command!(addresource(_ctx, msg, args) {
     let channels = msg.guild_id.unwrap().channels().unwrap();
@@ -23,14 +23,14 @@ command!(addresource(_ctx, msg, args) {
             let desc: String = args.multiple::<String>().unwrap().join(" ");
 
             let create_embed = |e: CreateEmbed| e
-                .title(&format!("New resource added by {}", msg.author.name))
                 .color(Colour::from_rgb(255, 161, 82))
                 .field(title, desc, false)
                 .field("Link", link, false);
 
             // send the resource to the channel
-            channel.send_message(|m| m.embed(create_embed)).unwrap();
-            msg.channel_id.say("You resource has been added successfully :white_check_mark:").unwrap();
+            let resource = channel.send_message(|m| m.content(&format!("New resource added by <@{}>", msg.author.id)).embed(create_embed)).unwrap();
+            resource.react("🚫").unwrap();
+            msg.channel_id.say("You resource has been added successfully :white_check_mark:. If you want to remove it, click on :no_entry_sign:.").unwrap();
     } else {
         msg.channel_id.say("Resources channel not found").unwrap();
     }

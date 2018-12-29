@@ -3,6 +3,10 @@ use serenity::model::gateway::Ready;
 use serenity::model::guild::Member;
 use serenity::model::id::{ChannelId, GuildId};
 use serenity::utils::Colour;
+use serenity::model::channel::Reaction;
+use serenity::CACHE;
+// resources channel's id
+use super::commands::utils::RESOURCES_CHANNEL;
 
 const WELCOME_CHANNEL: u64 = 527310098679201795;
 const RULES_CHANNEL: u64 = 527310131755745280;
@@ -34,5 +38,29 @@ impl EventHandler for Handler {
                 msg.react("👋").unwrap();
             }
         }
+    }
+
+    fn reaction_add(&self, _ctx: Context, reaction: Reaction) {
+        if(reaction.channel_id == RESOURCES_CHANNEL) {
+            remove_resource(&reaction);
+        }
+
+    }
+
+}
+
+// Remove a resource with the author has clicked on the reaction
+fn remove_resource(reaction: &Reaction) {
+    // read the cache
+    let cache = CACHE.read();
+
+    let msg = reaction.message().unwrap();
+    let author = reaction.user().unwrap();
+    let user_id = msg.mentions[0].id;
+
+    if(user_id == author.id) {
+        msg.delete().unwrap();
+        let dm = author.create_dm_channel().expect("Cannot create dm channel");
+        dm.say("Your resource has been removed.");
     }
 }
