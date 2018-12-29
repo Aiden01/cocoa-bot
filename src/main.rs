@@ -15,11 +15,7 @@ use serenity::{
 
 use std::env;
 
-pub fn check_error(result: serenity::Result) {
-    if let Err(e) = result {
-        println!("An error occurred: {}", e);
-    }
-}
+
 
 fn main() {
     let token = env::var("BOT_TOKEN").expect("Please provide the bot's token in the environnement");
