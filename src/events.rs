@@ -4,8 +4,8 @@ use serenity::model::guild::Member;
 use serenity::model::id::{ChannelId, GuildId};
 use serenity::utils::Colour;
 
-const WELCOME_CHANNEL: u64 = 527718209248296973;
-const RULES_CHANNEL: u64 = 527885775270969364;
+const WELCOME_CHANNEL: u64 = 527310098679201795;
+const RULES_CHANNEL: u64 = 527310131755745280;
 
 pub struct Handler;
 

@@ -3,7 +3,7 @@ use serenity::model::user::User;
 use serenity::model::id::RoleId;
 use serenity::CACHE;
 
-
+const MUTED_ROLE_ID: u64 = 528662265684295702;
 
 command!(mute(_ctx, msg, args) {
     args.skip();
@@ -19,7 +19,7 @@ command!(mute(_ctx, msg, args) {
 
     let g = guild.read();
     
-    if let Some(role) = g.roles.get(&RoleId(527908267012390932)) {
+    if let Some(role) = g.roles.get(&RoleId(MUTED_ROLE_ID)) {
         let _ = member.add_role(role.id);
         msg.channel_id.say(&format!(":hammer: **{}** has been muted for: **{}**", member.display_name(), reason));
             let dm = user.create_dm_channel().unwrap();
@@ -38,7 +38,7 @@ command!(unmute(_ctx, msg, _args) {
     let guild = msg.guild_id.unwrap().to_guild_cached().unwrap();
     
     let g = guild.read();
-    if let Some(role) = g.roles.get(&RoleId(527908267012390932)) {
+    if let Some(role) = g.roles.get(&RoleId(MUTED_ROLE_ID)) {
         match member.remove_role(role.id) {
             Err(_) => msg.channel_id.say("An error occurred, cannot remove the role."),
             Ok(_) => msg.channel_id.say(&format!("**{}** is now unmuted", member.display_name()))
