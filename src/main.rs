@@ -53,6 +53,11 @@ fn main() {
                 .wrong_channel(HelpBehaviour::Strike)
                  })
         // utils
+        .command("addresource", |c| c
+            .cmd(commands::utils::addresource)
+            .desc("Adds a resource to the ressources channel")
+            .min_args(3)
+        )
         .command("code", |c| c.cmd(commands::utils::code).desc("Shows you own to wrap your code"))
         // moderation
         .command("mute", |c| c
