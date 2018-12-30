@@ -104,12 +104,14 @@ fn main() {
         .command("mute", |c| c
             .cmd(commands::moderation::mute)
             .check(checks::mod_check)
+            .check(checks::cannot_use_on_them)
             .desc("Mutes the user")
             .min_args(1)
         )
         .command("unmute", |c| c
             .cmd(commands::moderation::unmute)
             .check(checks::mod_check)
+            .check(checks::cannot_use_on_them)
             .desc("Unmutes the user")
             .num_args(1)
         );
