@@ -12,6 +12,9 @@ git = "https://github.com/serenity-rs/serenity.git"
 features = ["framework", "standard_framework"]
 
 [dependencies]
+typemap = "0.3"
+dotenv = "0.13.0"
+
 
 
 

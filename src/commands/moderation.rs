@@ -2,10 +2,12 @@ use serenity::model::guild::Member;
 use serenity::model::user::User;
 use serenity::model::id::RoleId;
 use serenity::CACHE;
+use super::super::get_env_val;
 
-const MUTED_ROLE_ID: u64 = 528662265684295702;
 
-command!(mute(_ctx, msg, args) {
+
+command!(mute(ctx, msg, args) {
+    let MUTED_ROLE_ID = get_env_val(&ctx, "MUTED_ROLE_ID").unwrap().as_str().parse::<u64>().unwrap();;
     args.skip();
     let reason = match args.multiple::<String>() {
         Ok(s) => s.join(" "),
@@ -30,7 +32,8 @@ command!(mute(_ctx, msg, args) {
 
 });
 
-command!(unmute(_ctx, msg, _args) {
+command!(unmute(ctx, msg, _args) {
+    let MUTED_ROLE_ID = get_env_val(&ctx, "MUTED_ROLE_ID").unwrap().as_str().parse::<u64>().unwrap();;
     let cache = CACHE.read();
     let user: &User = &msg.mentions[0];
     let mut member: Member = cache.member(msg.guild_id.unwrap(), user.id).unwrap();

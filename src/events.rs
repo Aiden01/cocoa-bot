@@ -5,11 +5,8 @@ use serenity::model::id::{ChannelId, GuildId};
 use serenity::utils::Colour;
 use serenity::model::channel::Reaction;
 use serenity::CACHE;
-// resources channel's id
-use super::commands::utils::RESOURCES_CHANNEL;
+use super::get_env_val;
 
-const WELCOME_CHANNEL: u64 = 527310098679201795;
-const RULES_CHANNEL: u64 = 527310131755745280;
 
 pub struct Handler;
 
@@ -20,8 +17,10 @@ impl EventHandler for Handler {
     }
 
     // Fired when a user joins the server
-    fn guild_member_addition(&self, _ctx: Context, guild_id: GuildId, new_member: Member) {
+    fn guild_member_addition(&self, ctx: Context, guild_id: GuildId, new_member: Member) {
         let user = new_member.user_id().to_user().unwrap();
+        let WELCOME_CHANNEL = get_env_val(&ctx, "WELCOME_CHANNEL").unwrap().as_str().parse::<u64>().unwrap();;
+        let RULES_CHANNEL = get_env_val(&ctx, "RULES_CHANNEL").unwrap();
 
         let channels = guild_id.channels().unwrap();
         match channels.get(&ChannelId(WELCOME_CHANNEL)) {
@@ -40,8 +39,9 @@ impl EventHandler for Handler {
         }
     }
 
-    fn reaction_add(&self, _ctx: Context, reaction: Reaction) {
-        if(reaction.channel_id == RESOURCES_CHANNEL) {
+    fn reaction_add(&self, ctx: Context, reaction: Reaction) {
+        let RESOURCES_CHANNEL = get_env_val(&ctx, "RESOURCES_CHANNEL").unwrap().as_str().parse::<u64>().unwrap();;
+        if reaction.channel_id.as_u64() == &RESOURCES_CHANNEL {
             remove_resource(&reaction);
         }
 
@@ -58,7 +58,7 @@ fn remove_resource(reaction: &Reaction) {
     let author = reaction.user().unwrap();
     let user_id = msg.mentions[0].id;
 
-    if(user_id == author.id) {
+    if user_id == author.id {
         msg.delete().unwrap();
         let dm = author.create_dm_channel().expect("Cannot create dm channel");
         dm.say("Your resource has been removed.");
