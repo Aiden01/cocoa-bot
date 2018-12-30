@@ -12,7 +12,10 @@ pub struct Handler;
 
 impl EventHandler for Handler {
     fn ready(&self, ctx: Context, bot: Ready) {
-        let _ = ctx.edit_profile(|profile| profile.username("CocoaBot"));
+        let _ = ctx.edit_profile(|profile| profile
+            .username("CocoaBot")
+            .avatar(Some("https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.wallpapersafari.com%2F67%2F87%2FpDbV7f.jpg&f=1"))
+        );
         println!("{} is now connected", bot.user.name);
     }
 
