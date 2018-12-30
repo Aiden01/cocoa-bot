@@ -91,14 +91,14 @@ fn main() {
                 .lacking_permissions(HelpBehaviour::Hide)
         
                 .lacking_role(HelpBehaviour::Strike)
-                
                 .wrong_channel(HelpBehaviour::Strike)
-                 })
+        })
         // utils
         .group("Utils", |g| g
             .command("addresource", |c| c
                 .cmd(commands::utils::addresource)
-                .desc("Adds a resource to the ressources channel")
+                .desc("Adds a resource to the resources channel")
+                .usage("++addresource [Title (use - instead of spaces)] [Link] [Description]")
                 .min_args(3)
             )
             .command("code", |c| c.cmd(commands::utils::code).desc("Shows you own to wrap your code"))
