@@ -1,6 +1,7 @@
 use serenity::model::guild::Member;
 use serenity::model::user::User;
 use serenity::model::id::RoleId;
+use serenity::model::id::MessageId;
 use serenity::CACHE;
 use super::super::get_env_val;
 
@@ -52,4 +53,17 @@ command!(unmute(ctx, msg, _args) {
 
 
     
+});
+
+command!(clear(_ctx, msg, args) {
+    let nb_to_delete = args.single::<u64>().unwrap();
+    let channel = msg.channel_id.to_channel_cached().unwrap();
+    let messages = channel.messages(|f| f.limit(nb_to_delete)).unwrap();
+
+    let msg_ids: Vec<MessageId> = messages.iter().map(|m| m.id).collect();
+
+    if let Err(_) = msg.channel_id.delete_messages(msg_ids) {
+        msg.channel_id.say("Cannot clear messages").unwrap();
+    } 
+
 });

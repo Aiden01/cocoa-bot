@@ -7,9 +7,12 @@ use serenity::utils::Colour;
 use serenity::builder::CreateEmbed;
 use super::super::get_env_val;
 
+
 command!(code(_ctx, msg, _args) {
     let _ = msg.channel_id.say("Here's how to wrap code:\n\n`\n```language\nyour code here\n```\n`\n\nSo it becomes\n```swift\nprint('Hello, World')\n```\nFor large amount, please use a service like https://hastebin.com.");
 });
+
+
 
 
 command!(addresource(ctx, msg, args) {
@@ -35,7 +38,4 @@ command!(addresource(ctx, msg, args) {
     } else {
         msg.channel_id.say("Resources channel not found").unwrap();
     }
-
-
-
 });

@@ -119,6 +119,12 @@ fn main() {
                 .desc("Unmutes the user")
                 .num_args(1)
             )
+            .command("clear", |c| c
+                .cmd(commands::moderation::clear)
+                .allowed_roles(vec!["Admin, Moderator"])
+                .desc("Deletes x messages")
+                .num_args(1)
+            )
         );
 
     client.with_framework(fw);
