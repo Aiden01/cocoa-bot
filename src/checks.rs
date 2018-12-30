@@ -26,6 +26,6 @@ pub fn cannot_use_on_them(_ctx: &mut Context, msg: &Message, _: &mut Args, _: &C
     let user: &User = &msg.mentions[0];
     let mut member: Member = cache.member(msg.guild_id.unwrap(), user.id).unwrap();
 
-    msg.author.id == member.user_id()
+    msg.author.id != member.user_id()
 
 }
