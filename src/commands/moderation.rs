@@ -66,4 +66,6 @@ command!(clear(_ctx, msg, args) {
         msg.channel_id.say("Cannot clear messages").unwrap();
     } 
 
+    msg.delete();
+
 });
