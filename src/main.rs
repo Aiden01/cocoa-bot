@@ -15,6 +15,7 @@ use serenity::{
     prelude::*,
 };
 
+
 use std::env;
 use std::sync::Arc;
 use typemap::Key;
@@ -89,31 +90,35 @@ fn main() {
                 .max_levenshtein_distance(3)
                 .lacking_permissions(HelpBehaviour::Hide)
         
-                .lacking_role(HelpBehaviour::Nothing)
+                .lacking_role(HelpBehaviour::Strike)
                 
                 .wrong_channel(HelpBehaviour::Strike)
                  })
         // utils
-        .command("addresource", |c| c
-            .cmd(commands::utils::addresource)
-            .desc("Adds a resource to the ressources channel")
-            .min_args(3)
+        .group("Utils", |g| g
+            .command("addresource", |c| c
+                .cmd(commands::utils::addresource)
+                .desc("Adds a resource to the ressources channel")
+                .min_args(3)
+            )
+            .command("code", |c| c.cmd(commands::utils::code).desc("Shows you own to wrap your code"))
         )
-        .command("code", |c| c.cmd(commands::utils::code).desc("Shows you own to wrap your code"))
         // moderation
-        .command("mute", |c| c
-            .cmd(commands::moderation::mute)
-            .check(checks::mod_check)
-            .check(checks::cannot_use_on_them)
-            .desc("Mutes the user")
-            .min_args(1)
-        )
-        .command("unmute", |c| c
-            .cmd(commands::moderation::unmute)
-            .check(checks::mod_check)
-            .check(checks::cannot_use_on_them)
-            .desc("Unmutes the user")
-            .num_args(1)
+        .group("Moderation", |g| g
+            .command("mute", |c| c
+                .cmd(commands::moderation::mute)
+                .check(checks::cannot_use_on_them)
+                .allowed_roles(vec!["Admin, Moderator"])
+                .desc("Mutes the user")
+                .min_args(1)
+            )
+            .command("unmute", |c| c
+                .cmd(commands::moderation::unmute)
+                .allowed_roles(vec!["Admin, Moderator"])
+                .check(checks::cannot_use_on_them)
+                .desc("Unmutes the user")
+                .num_args(1)
+            )
         );
 
     client.with_framework(fw);
