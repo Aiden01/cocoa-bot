@@ -16,6 +16,8 @@ use serenity::{
 };
 
 
+
+
 use std::env;
 use std::sync::Arc;
 use typemap::Key;
@@ -94,7 +96,7 @@ fn main() {
                 .wrong_channel(HelpBehaviour::Strike)
         })
         // utils
-        .group("Utils", |g| g
+        .group("Utility", |g| g
             .command("addresource", |c| c
                 .cmd(commands::utils::addresource)
                 .desc("Adds a resource to the resources channel")
@@ -118,6 +120,13 @@ fn main() {
                 .check(checks::cannot_use_on_them)
                 .desc("Unmutes the user")
                 .num_args(1)
+            )
+            .command("ban", |c| c
+                .cmd(commands::moderation::ban)
+                .allowed_roles(vec!["Admin, Moderator"])
+                .check(checks::cannot_use_on_them)
+                .desc("Bans the user")
+                .min_args(1)
             )
             .command("clear", |c| c
                 .cmd(commands::moderation::clear)

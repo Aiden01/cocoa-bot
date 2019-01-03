@@ -26,6 +26,10 @@ command!(addresource(ctx, msg, args) {
             let desc: String = args.multiple::<String>().unwrap().join(" ");
 
             let create_embed = |e: CreateEmbed| e
+                .author(|a| a
+                    .icon_url(&msg.author.default_avatar_url())
+                    .name(&format!("{}#{}", msg.author.name, msg.author.discriminator))
+                )
                 .color(Colour::from_rgb(255, 161, 82))
                 .field(title, desc, false)
                 .field("Link", link, false);
